@@ -1,0 +1,124 @@
+{
+    "game_name":      "Demo Game: Destiny of the Cube",
+    "game_creator":   "Bismarck",
+    "game_version":   "1.0",
+    "engine_version": "1.0",
+
+    "start_coords": {"x": 0, "y": 0},
+    "end_coords": {"x": 1, "y": 2},
+    
+    "rooms": [
+        {
+            "coords": {"x": 0, "y":0},
+            "doors": ["Wide Passage", "", "", ""],
+            "items": [],
+            "description": [
+                "You are in a bright room with orange walls.",
+                "Along the walls you see a grid in thin grey lines and measurements listed.",
+                "You can't see where the light it coming from, it just seems to emanate from the centre of the room."
+            ]
+        },
+        {
+            "coords": {"x": 0, "y":1},
+            "doors": ["", "Large Ornate Door", "", ""],
+            "items": ["Sword", "Gold Key"],
+            "description": [
+                "This room is similarly decorated to the previous one.",
+                "There is a large grey cube in the corner with the same measurements and grid on it, as on the walls."
+            ]
+        },
+        {
+            "coords": {"x": 1, "y":1},
+            "doors": ["Dark Passage", "", "", "Large Ornate Door"],
+            "items": ["Cup of Tea"],
+            "description": [
+                "This room is similarly decorated to the previous one.",
+                "In the centre of the room, you can see a wrought-iron garden table."
+            ]
+        },
+        {
+            "coords": {"x": 1, "y": 2},
+            "doors": ["", "", "", ""],
+            "items": [],
+            "description": [
+                "You have reached the end of the demo game.",
+                "Now go forth and make better games of your own.",
+                "Thanks for playing!"
+            ]
+        }
+    ],
+
+    "items": [
+        {
+            "name": "Iron Sword",
+            "aliases": ["Sword", "Gleaming Sword"],
+            "description": [
+                "On the floor is a gleaming iron <Sword>.",
+                "It glows bright orange reflecting the colour of the walls."
+            ]
+        },
+        {
+            "name": "Gold Key",
+            "aliases": ["Key"],
+            "description": [
+                "On the floor is a gleaming iron sword.",
+                "It glows bright orange reflecting the colour of the walls."
+            ]
+        },
+        {
+            "name": "Cup of Tea",
+            "aliases": ["Tea", "Cuppa"],
+            "description": [
+                "On the table is a steaming-hot <Cup of Tea>.",
+                "(Earl Grey, if you're wondering.)"
+            ]
+        }
+    ],
+
+    "doors": [
+        {
+            "name": "Large Ornate Door",
+            "locked": true,
+            "aliases": ["Ornate Door", "Large Door"],
+            "description": [
+                "To the east, you see a <Large Ornate Door>, covered with fine carvings of acanthus leaves,",
+                "and decorated with shimmering gold trim."
+            ],
+            "openings": {
+                "Gold Key": [
+                    "The large gold key effortlessly spins in the lock and suddenly disappears.",
+                    "A loud creaking can be heard as the ornate doors swing open automatically."
+                ],
+                "Cannon": [
+                    "Wait, what!?",
+                    "You're not supposed to have a cannon!",
+                    "Alright, fine. But just this once...",
+                    "",
+                    "You load the cannon and aim it at the ornate doors.",
+                    "\"FIRE!\" you yell, pulling the cord. A heavy ball of dark metal flies out of the cannon and strikes the grand doors.",
+                    "The doors flash in and out of existence rapidly, before a satisfying jingle plays and they disappear for good."
+                ]
+            }
+        },
+        {
+            "name": "Dark Passage",
+            "locked": false,
+            "aliases": ["Dark Door", "Exit", "Void"],
+            "description": [
+                "To the north, there is a foreboding <Dark Passage>.",
+                "Above it is a bright-green, glowing exit-sign."
+            ],
+            "openings": {}
+        },
+        {
+            "name": "Wide Passage",
+            "locked": false,
+            "aliases": ["Passage", "Wide"],
+            "description": [
+                "To the north, there is a foreboding <Dark Passage>.",
+                "Above it is a bright-green, glowing exit-sign."
+            ],
+            "openings": {}
+        }
+    ]
+}
