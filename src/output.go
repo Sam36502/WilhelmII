@@ -10,14 +10,13 @@ const (
 	LOG_FATAL   = LogLevel(10)
 )
 
-const (
-	OPT_ERR_DISPL_LVL = "err.displ.lvl" // The level at which messages should be displayed (recc. 5 for debug, 10 for production)
-)
+var noLvlSetMessageDisplayed = false
 
-func ErrorMsg(msg string, lvl LogLevel) {
+func LogMsg(msg string, lvl LogLevel) {
 	errDisplLvl := Options.GetInt(OPT_ERR_DISPL_LVL, -1)
-	if errDisplLvl == -1 {
+	if errDisplLvl == -1 && !noLvlSetMessageDisplayed {
 		fmt.Println("[INFO] No level set for when to display error messages, defaulting to 5.")
+		noLvlSetMessageDisplayed = true
 	}
 
 	if lvl >= LogLevel(errDisplLvl) {

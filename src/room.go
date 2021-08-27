@@ -9,3 +9,9 @@ type Room struct {
 	Items []*Item
 	Doors []*Door
 }
+
+var RoomIndex = make(map[Coords]Room)
+
+func GetRoom(coords Coords) Room {
+	return RoomIndex[coords]
+}

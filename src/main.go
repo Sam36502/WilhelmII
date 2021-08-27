@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	OPTIONS_FILE = "src/options.properties"
+	OPTIONS_FILE = "options.properties"
 )
 
 func init() {
@@ -13,10 +13,10 @@ func init() {
 }
 
 func main() {
-	game := LoadGame("src/testgame.json")
+	game := LoadGame("testgame.json")
 	fmt.Println("Game loaded.")
 	fmt.Println("  Num. Rooms: " + fmt.Sprint(len(game.Rooms)))
 	for k, v := range game.Items {
-		fmt.Println("[" + k + "] - " + v.Name + "; \"" + v.Description[0] + " ...\"")
+		fmt.Println("[" + fmt.Sprint(k) + "] - " + v.Names[0] + "; \"" + v.Description[0] + " ...\"")
 	}
 }

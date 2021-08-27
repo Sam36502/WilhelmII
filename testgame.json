@@ -50,24 +50,21 @@
 
     "items": [
         {
-            "name": "Iron Sword",
-            "aliases": ["Sword", "Gleaming Sword"],
+            "names": ["Iron Sword", "Sword", "Gleaming Sword"],
             "description": [
                 "On the floor is a gleaming iron <Sword>.",
                 "It glows bright orange reflecting the colour of the walls."
             ]
         },
         {
-            "name": "Gold Key",
-            "aliases": ["Key"],
+            "names": ["Gold Key", "Key"],
             "description": [
                 "On the floor is a gleaming iron sword.",
                 "It glows bright orange reflecting the colour of the walls."
             ]
         },
         {
-            "name": "Cup of Tea",
-            "aliases": ["Tea", "Cuppa"],
+            "names": ["Cup of Tea", "Tea", "Cuppa"],
             "description": [
                 "On the table is a steaming-hot <Cup of Tea>.",
                 "(Earl Grey, if you're wondering.)"
@@ -77,9 +74,8 @@
 
     "doors": [
         {
-            "name": "Large Ornate Door",
             "locked": true,
-            "aliases": ["Ornate Door", "Large Door"],
+            "names": ["Large Ornate Door", "Ornate Door", "Large Door"],
             "description": [
                 "To the east, you see a <Large Ornate Door>, covered with fine carvings of acanthus leaves,",
                 "and decorated with shimmering gold trim."
@@ -101,9 +97,8 @@
             }
         },
         {
-            "name": "Dark Passage",
             "locked": false,
-            "aliases": ["Dark Door", "Exit", "Void"],
+            "names": ["Dark Passage", "Dark Door", "Exit", "Void"],
             "description": [
                 "To the north, there is a foreboding <Dark Passage>.",
                 "Above it is a bright-green, glowing exit-sign."
@@ -111,9 +106,8 @@
             "openings": {}
         },
         {
-            "name": "Wide Passage",
             "locked": false,
-            "aliases": ["Passage", "Wide"],
+            "names": ["Wide Passage", "Passage", "Wide"],
             "description": [
                 "To the north, there is a foreboding <Dark Passage>.",
                 "Above it is a bright-green, glowing exit-sign."
