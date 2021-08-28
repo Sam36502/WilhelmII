@@ -23,6 +23,24 @@ type Game struct {
 	Rooms []Room `json:"rooms"`
 	Items []Item `json:"items"`
 	Doors []Door `json:"doors"`
+
+	roomIndex     map[Coords]Room
+	itemIndex     []Item
+	itemNameIndex map[string]int
+	doorIndex     []Door
+	doorNameIndex map[string]int
+}
+
+func (game *Game) GetRoom(coords Coords) Room {
+	return game.roomIndex[coords]
+}
+
+func (game *Game) GetItem(name string) Item {
+	return game.itemIndex[game.itemNameIndex[name]]
+}
+
+func (game *Game) GetDoor(name string) Door {
+	return game.doorIndex[game.doorNameIndex[name]]
 }
 
 func LoadGame(gameFile string) Game {
@@ -61,8 +79,9 @@ func LoadGame(gameFile string) Game {
 	}
 
 	// Index Rooms
+	parsedGame.roomIndex = make(map[Coords]Room)
 	for _, v := range parsedGame.Rooms {
-		RoomIndex[v.Coords] = v
+		parsedGame.roomIndex[v.Coords] = v
 	}
 	LogMsg("Indexed "+fmt.Sprint(len(parsedGame.Rooms))+" rooms.", LOG_INFO)
 	if Options.GetBool(OPT_SHOW_LOAD_INFO, false) {
@@ -70,10 +89,12 @@ func LoadGame(gameFile string) Game {
 	}
 
 	// Index Items
+	parsedGame.itemIndex = make([]Item, 0)
+	parsedGame.itemNameIndex = make(map[string]int)
 	for k, v := range parsedGame.Items {
 		for _, n := range v.Names {
 			// Check for duplicates
-			_, exists := ItemNameIndex[n]
+			_, exists := parsedGame.itemNameIndex[n]
 			if exists {
 				LogMsg(
 					"Failed to load Game file: Item name '"+n+"' is used multiple times",
@@ -82,9 +103,9 @@ func LoadGame(gameFile string) Game {
 				return Game{}
 			}
 
-			ItemNameIndex[n] = k
+			parsedGame.itemNameIndex[n] = k
 		}
-		ItemIndex[k] = v
+		parsedGame.itemIndex = append(parsedGame.itemIndex, v)
 	}
 	LogMsg("Indexed "+fmt.Sprint(len(parsedGame.Items))+" items.", LOG_INFO)
 	if Options.GetBool(OPT_SHOW_LOAD_INFO, false) {
@@ -92,10 +113,12 @@ func LoadGame(gameFile string) Game {
 	}
 
 	// Index Doors
+	parsedGame.doorIndex = make([]Door, 0)
+	parsedGame.doorNameIndex = make(map[string]int)
 	for k, v := range parsedGame.Doors {
 		for _, n := range v.Names {
 			// Check for duplicates
-			_, exists := DoorNameIndex[n]
+			_, exists := parsedGame.doorNameIndex[n]
 			if exists {
 				LogMsg(
 					"Failed to load Game file: Door name '"+n+"' is used multiple times",
@@ -104,9 +127,9 @@ func LoadGame(gameFile string) Game {
 				return Game{}
 			}
 
-			DoorNameIndex[n] = k
+			parsedGame.doorNameIndex[n] = k
 		}
-		DoorIndex[k] = v
+		parsedGame.doorIndex = append(parsedGame.doorIndex, v)
 	}
 	LogMsg("Indexed "+fmt.Sprint(len(parsedGame.Doors))+" doors.", LOG_INFO)
 	if Options.GetBool(OPT_SHOW_LOAD_INFO, false) {

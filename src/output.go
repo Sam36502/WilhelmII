@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+
+	"github.com/mgutz/ansi"
+)
 
 type LogLevel int
 
@@ -15,22 +20,23 @@ var noLvlSetMessageDisplayed = false
 func LogMsg(msg string, lvl LogLevel) {
 	errDisplLvl := Options.GetInt(OPT_ERR_DISPL_LVL, -1)
 	if errDisplLvl == -1 && !noLvlSetMessageDisplayed {
-		fmt.Println("[INFO] No level set for when to display error messages, defaulting to 5.")
+		fmt.Println(ansi.Color("[INFO] No level set for when to display error messages, defaulting to 5.", "cyan"))
 		noLvlSetMessageDisplayed = true
 	}
 
 	if lvl >= LogLevel(errDisplLvl) {
-		var lvlMsg string
 
 		switch lvl {
 		case LOG_INFO:
-			lvlMsg = "[INFO]"
+			fmt.Println(ansi.Color("[INFO] "+msg, "cyan"))
 		case LOG_WARNING:
-			lvlMsg = "[WARNING]"
+			fmt.Println(ansi.Color("[WARNING] "+msg, "yellow"))
 		case LOG_FATAL:
-			lvlMsg = "[ERROR]"
+			fmt.Println(ansi.Color("[ERROR] "+msg, "red"))
 		}
+	}
 
-		fmt.Println(lvlMsg + msg)
+	if lvl >= LOG_FATAL {
+		os.Exit(1)
 	}
 }
