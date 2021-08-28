@@ -19,6 +19,8 @@ func init() {
 
 func main() {
 
+	/// LOADING GAME ///
+
 	// TODO: Make not dogshit (Add ANSI colours and nice formatting)
 	// Show main menu message
 	fmt.Printf(
@@ -54,8 +56,12 @@ func main() {
 	}
 	survey.AskOne(prompt, &file)
 
-	// DEBUG: Print Description of first item
+	// Load Game
 	game := LoadGame(gameDir + "/" + file)
-	fmt.Println("First name of first item: " + game.itemIndex[0].Names[0])
+
+	///	MAIN GAMEPLAY LOOP ///
+	fmt.Println("Ending: " + game.endingIndex["The Content Ending"].Name)
+
+	/// ENDING THE GAME ///
 
 }

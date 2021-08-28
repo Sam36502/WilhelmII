@@ -11,8 +11,9 @@ type Room struct {
 }
 
 type Item struct {
-	Names       []string `json:"names"`
-	Description []string `json:"description"`
+	Names   []string `json:"names"`
+	Context []string `json:"context"` // The text displayed when it's found
+	Inspect []string `json:"inspect"` // The text displayed when inspected in the player's inventory
 }
 
 type Door struct {
@@ -20,4 +21,9 @@ type Door struct {
 	Names       []string            `json:"names"`
 	Description []string            `json:"description"`
 	Openings    map[string][]string `json:"openings"`
+}
+
+type Ending struct {
+	Name        string   `json:"name"`
+	Description []string `json:"description"`
 }

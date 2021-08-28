@@ -51,23 +51,47 @@
     "items": [
         {
             "names": ["Iron Sword", "Sword", "Gleaming Sword"],
-            "description": [
+            "context": [
                 "On the floor is a gleaming iron <Sword>.",
                 "It glows bright orange reflecting the colour of the walls."
+            ],
+            "inspect": [
+                "A well made iron sword that shines white with mirror-polished sides.",
+                "The hilt is fairly basicly designed with brown leather wrapped around",
+                "the handle and a grey metal pommel."
             ]
         },
         {
             "names": ["Gold Key", "Key"],
-            "description": [
+            "context": [
                 "On the floor is a gleaming iron sword.",
                 "It glows bright orange reflecting the colour of the walls."
+            ],
+            "inspect": [
+                "An oversized golden key.",
+                "You don't think it's solid gold given how light it is."
             ]
         },
         {
             "names": ["Cup of Tea", "Tea", "Cuppa"],
-            "description": [
+            "context": [
                 "On the table is a steaming-hot <Cup of Tea>.",
                 "(Earl Grey, if you're wondering.)"
+            ],
+            "inspect": [
+                "A marvellously aromatic cup of Earl Grey tea.",
+                "The china is also beautifully decorated with watercolour",
+                "scenes of victorian picnics in the countryside."
+            ]
+        },
+        {
+            "names": ["Cannon"],
+            "context": [],
+            "inspect": [
+                "A Napoleonic War Cannon with all the materials to fire it and-",
+                "Wait, what?",
+                "How did you get this?",
+                "I shall be having words with the devs... *grumble*"
             ]
         }
     ],
@@ -92,7 +116,8 @@
                     "",
                     "You load the cannon and aim it at the ornate doors.",
                     "\"FIRE!\" you yell, pulling the cord. A heavy ball of dark metal flies out of the cannon and strikes the grand doors.",
-                    "The doors flash in and out of existence rapidly, before a satisfying jingle plays and they disappear for good."
+                    "The doors flash in and out of existence rapidly, before a satisfying jingle plays and they disappear for good.",
+                    "You smile very smugly and pat the cannon satisfiedly."
                 ]
             }
         },
@@ -113,6 +138,43 @@
                 "Above it is a bright-green, glowing exit-sign."
             ],
             "openings": {}
+        }
+    ],
+
+    "endings":[
+        {
+            "name": "The Existential Ending",
+            "description": [
+                "You reach the end of the small maze and look around as you stand",
+                "in a black void. Suddenly, you realise that you've been in a video",
+                "game the entire time. Panicking, you run as fast as you can back",
+                "the way you came, screaming for the player to not turn off the game,",
+                "lest you be destroyed forever..."
+            ]
+        },
+        {
+            "name": "The Content Ending",
+            "description": [
+                "You sit at the wrought iron table on a similarly acanthus-adorned chair.",
+                "You lean back close your eyes and take a deep breath. Then you take a deep",
+                "sip of the tea and admire the intricately decorated sides of the cup and saucer.",
+                "You know you're a video game character and will cease to exist very shortly, but",
+                "you're not going to let silly things like existentialism ruin a good cup of tea."
+            ]
+        },
+        {
+            "name": "The Heroic, But Still Funny Ending",
+            "description": [
+                "Wait, what!?",
+                "You're not supposed to have a cannon!",
+                "Alright, fine. But just this once...",
+                "",
+                "You load the cannon and aim it at the ornate doors.",
+                "\"FIRE!\" You yell, pulling the cord, but it seems you packed the cannonball in",
+                "a bit too tightly. Also, it turns out, this was only a reproduction napoleonic cannon,",
+                "and the back end of the cannon ruptures filling your chest with shrapnel. You",
+                "die almost instantly. Your last thoughts are about how cool your death must've looked."
+            ]
         }
     ]
 }
