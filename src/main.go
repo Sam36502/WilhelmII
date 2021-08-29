@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"src/src/wilhelm"
+	"time"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/mgutz/ansi"
@@ -14,7 +16,7 @@ const (
 )
 
 func init() {
-	LoadOptions(OPTIONS_FILE)
+	wilhelm.LoadOptions(OPTIONS_FILE)
 }
 
 func main() {
@@ -32,10 +34,10 @@ func main() {
 	)
 
 	// Find all game files in the 'games' folder
-	gameDir := Options.GetString(OPT_GAMES_DIR, "games")
+	gameDir := wilhelm.Options.GetString(wilhelm.OPT_GAMES_DIR, "games")
 	files, err := ioutil.ReadDir(gameDir)
 	if err != nil {
-		LogMsg("Failed to read games directory.", LOG_FATAL)
+		wilhelm.LogMsg("Failed to read games directory.", wilhelm.LOG_FATAL)
 		return
 	}
 
@@ -57,14 +59,35 @@ func main() {
 	survey.AskOne(prompt, &file)
 
 	// Load Game
-	game := LoadGame(gameDir + "/" + file)
+	game := wilhelm.LoadGame(gameDir + "/" + file)
+	player := wilhelm.NewPlayer(game)
 
 	///	MAIN GAMEPLAY LOOP ///
-	for _, v := range game.roomIndex {
-		fmt.Println("Name: " + v.Description[0])
+	for !game.IsFinished() {
+
+		// Describe Room
+		wilhelm.ClearScreen()
+
+		currRoom := game.GetRoom(player.GetCoords())
+		wilhelm.DisplayText(currRoom.GetDescription())
+
+		// Get User Input
+		command := ""
+		prompt := &survey.Input{
+			Message: " What will you do?\n    > ",
+			Suggest: wilhelm.CommandSuggest,
+		}
+		survey.AskOne(prompt, &command)
+
+		// Execute User's Wishes
+		game.ExecuteCommand(command, []string{})
+
 	}
-	fmt.Println("Content Ending: " + game.GetEnding("The Existential Ending").Name)
 
 	/// ENDING THE GAME ///
+
+	wilhelm.ClearScreen()
+	fmt.Println("  Goodbye!")
+	time.Sleep(3 * time.Second)
 
 }
