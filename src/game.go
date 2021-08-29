@@ -93,8 +93,8 @@ func LoadGame(gameFile string) Game {
 
 	// Index Rooms
 	parsedGame.roomIndex = make(map[Coords]*Room)
-	for _, v := range parsedGame.Rooms {
-		parsedGame.roomIndex[v.Coords] = &v
+	for k, v := range parsedGame.Rooms {
+		parsedGame.roomIndex[v.Coords] = &parsedGame.Rooms[k]
 	}
 	LogMsg("Indexed "+fmt.Sprint(len(parsedGame.Rooms))+" rooms.", LOG_INFO)
 	if Options.GetBool(OPT_SHOW_LOAD_INFO, false) {
@@ -103,7 +103,7 @@ func LoadGame(gameFile string) Game {
 
 	// Index Items
 	parsedGame.itemIndex = make(map[string]*Item)
-	for _, v := range parsedGame.Items {
+	for k, v := range parsedGame.Items {
 		for _, n := range v.Names {
 			// Check for duplicates
 			_, exists := parsedGame.itemIndex[n]
@@ -115,7 +115,7 @@ func LoadGame(gameFile string) Game {
 				return Game{}
 			}
 
-			parsedGame.itemIndex[n] = &v
+			parsedGame.itemIndex[n] = &parsedGame.Items[k]
 		}
 	}
 	LogMsg("Indexed "+fmt.Sprint(len(parsedGame.Items))+" items.", LOG_INFO)
@@ -125,7 +125,7 @@ func LoadGame(gameFile string) Game {
 
 	// Index Doors
 	parsedGame.doorIndex = make(map[string]*Door)
-	for _, v := range parsedGame.Doors {
+	for k, v := range parsedGame.Doors {
 		for _, n := range v.Names {
 			// Check for duplicates
 			_, exists := parsedGame.doorIndex[n]
@@ -137,7 +137,7 @@ func LoadGame(gameFile string) Game {
 				return Game{}
 			}
 
-			parsedGame.doorIndex[n] = &v
+			parsedGame.doorIndex[n] = &parsedGame.Doors[k]
 		}
 	}
 	LogMsg("Indexed "+fmt.Sprint(len(parsedGame.Doors))+" doors.", LOG_INFO)
@@ -147,8 +147,8 @@ func LoadGame(gameFile string) Game {
 
 	// Index Endings
 	parsedGame.endingIndex = make(map[string]*Ending)
-	for _, v := range parsedGame.Endings {
-		parsedGame.endingIndex[v.Name] = &v
+	for k, v := range parsedGame.Endings {
+		parsedGame.endingIndex[v.Name] = &parsedGame.Endings[k]
 	}
 	LogMsg("Indexed "+fmt.Sprint(len(parsedGame.Endings))+" endings.", LOG_INFO)
 	if Options.GetBool(OPT_SHOW_LOAD_INFO, false) {

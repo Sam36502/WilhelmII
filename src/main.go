@@ -60,7 +60,10 @@ func main() {
 	game := LoadGame(gameDir + "/" + file)
 
 	///	MAIN GAMEPLAY LOOP ///
-	fmt.Println("Ending: " + game.endingIndex["The Content Ending"].Name)
+	for _, v := range game.roomIndex {
+		fmt.Println("Name: " + v.Description[0])
+	}
+	fmt.Println("Content Ending: " + game.GetEnding("The Existential Ending").Name)
 
 	/// ENDING THE GAME ///
 
