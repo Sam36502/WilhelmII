@@ -1,6 +1,7 @@
 package wilhelm
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 
@@ -52,6 +53,14 @@ func ClearScreen() {
 }
 
 /*
+	Pauses and prompts the user to press Enter
+*/
+func WaitForEnter() {
+	fmt.Println("  Press", ansi.Color("[Enter]", "green+h"), "to continue...")
+	bufio.NewReader(os.Stdin).ReadBytes('\n')
+}
+
+/*
 	Displays an object description filtering out escape sequences
 */
 func DisplayText(text []string) {
@@ -63,4 +72,5 @@ func DisplayText(text []string) {
 			fmt.Println("  " + l)
 		}
 	}
+	fmt.Print("\n")
 }

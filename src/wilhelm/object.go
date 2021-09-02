@@ -1,31 +1,29 @@
 package wilhelm
 
 type Room struct {
-	coords      Coords   `json:"coords"`
-	doorNames   []string `json:"doors"`
-	itemNames   []string `json:"items"`
-	description []string `json:"description"`
+	Coords      Coords   `json:"coords"`
+	DoorNames   []string `json:"doors"`
+	ItemNames   []string `json:"items"`
+	Description []string `json:"description"`
 
-	items []*Item
-	doors []*Door
+	Items []*Item
+	Doors []*Door
 }
 
-func (r *Room) GetDescription() []string { return r.description }
-
 type Item struct {
-	names   []string `json:"names"`
-	context []string `json:"context"` // The text displayed when it's found
-	inspect []string `json:"inspect"` // The text displayed when inspected in the player's inventory
+	Names   []string `json:"names"`
+	Context []string `json:"context"` // The text displayed when it's found
+	Inspect []string `json:"inspect"` // The text displayed when inspected in the player's inventory
 }
 
 type Door struct {
-	locked      bool                `json:"locked"`
-	names       []string            `json:"names"`
-	description []string            `json:"description"`
-	openings    map[string][]string `json:"openings"`
+	Locked      bool                `json:"locked"`
+	Names       []string            `json:"names"`
+	Description []string            `json:"description"`
+	Openings    map[string][]string `json:"openings"`
 }
 
 type Ending struct {
-	name        string   `json:"name"`
-	description []string `json:"description"`
+	Name        string   `json:"name"`
+	Description []string `json:"description"`
 }

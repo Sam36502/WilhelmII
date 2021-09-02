@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"src/src/wilhelm"
+	"strings"
 	"time"
 
 	"github.com/AlecAivazis/survey/v2"
@@ -69,25 +70,28 @@ func main() {
 		wilhelm.ClearScreen()
 
 		currRoom := game.GetRoom(player.GetCoords())
-		wilhelm.DisplayText(currRoom.GetDescription())
+		wilhelm.DisplayText(currRoom.Description)
 
 		// Get User Input
-		command := ""
+		commandStr := ""
 		prompt := &survey.Input{
 			Message: " What will you do?\n    > ",
 			Suggest: wilhelm.CommandSuggest,
 		}
-		survey.AskOne(prompt, &command)
+		survey.AskOne(prompt, &commandStr)
 
 		// Execute User's Wishes
-		game.ExecuteCommand(command, []string{})
-
+		commandArr := strings.Split(commandStr, " ")
+		game.ExecuteCommand(commandArr[0], commandArr[1:])
+		wilhelm.WaitForEnter()
 	}
 
 	/// ENDING THE GAME ///
 
 	wilhelm.ClearScreen()
+	// TODO: Make not shitty and boring
 	fmt.Println("  Goodbye!")
-	time.Sleep(3 * time.Second)
+	time.Sleep(1 * time.Second)
+	wilhelm.ClearScreen()
 
 }
