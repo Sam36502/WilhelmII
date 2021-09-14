@@ -4,21 +4,43 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"strings"
 )
 
 const (
 	DIR_NORTH = Direction(0)
 	DIR_EAST  = Direction(1)
 	DIR_SOUTH = Direction(2)
-	DOR_WEST  = Direction(3)
+	DIR_WEST  = Direction(3)
 )
+
+func parseDirection(dirName string) (Direction, error) {
+	dirName = strings.ToLower(dirName)
+
+	switch dirName {
+	case "north":
+	case "n":
+		return DIR_NORTH, nil
+	case "east":
+	case "e":
+		return DIR_EAST, nil
+	case "south":
+	case "s":
+		return DIR_SOUTH, nil
+	case "west":
+	case "w":
+		return DIR_WEST, nil
+	}
+
+	return Direction(-1), InvalidDirectionError(dirName)
+}
+
+type Direction int
 
 type Coords struct {
 	X int64 `json:"x"`
 	Y int64 `json:"y"`
 }
-
-type Direction int
 
 type Game struct {
 	GameName    string `json:"game_name"`
@@ -33,6 +55,8 @@ type Game struct {
 	Items   []Item   `json:"items"`
 	Doors   []Door   `json:"doors"`
 	Endings []Ending `json:"endings"`
+
+	Player Player
 
 	roomIndex   map[Coords]*Room
 	itemIndex   map[string]*Item
@@ -160,6 +184,11 @@ func LoadGame(gameFile string) Game {
 	LogMsg("  Game loaded successfully!", LOG_INFO)
 	if Options.GetBool(OPT_SHOW_LOAD_INFO, false) {
 		fmt.Println("  Game loaded successfully!")
+	}
+
+	parsedGame.Player = Player{
+		position:  parsedGame.StartCoords,
+		inventory: make([]Item, 0),
 	}
 
 	parsedGame.gameFinished = false

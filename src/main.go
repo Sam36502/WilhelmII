@@ -34,6 +34,9 @@ func main() {
 		ENGINE_VERSION,
 	)
 
+	// Initialize Enging
+	wilhelm.LoadCommands()
+
 	// Find all game files in the 'games' folder
 	gameDir := wilhelm.Options.GetString(wilhelm.OPT_GAMES_DIR, "games")
 	files, err := ioutil.ReadDir(gameDir)
@@ -82,7 +85,11 @@ func main() {
 
 		// Execute User's Wishes
 		commandArr := strings.Split(commandStr, " ")
-		game.ExecuteCommand(commandArr[0], commandArr[1:])
+		var args []string = nil
+		if len(commandArr) > 1 {
+			args = commandArr[1:]
+		}
+		game.ExecuteCommand(commandArr[0], args)
 		wilhelm.WaitForEnter()
 	}
 

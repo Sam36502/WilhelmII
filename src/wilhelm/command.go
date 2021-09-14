@@ -1,47 +1,160 @@
 package wilhelm
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-var allCommands = []string{
-	"help",
-	"go",
-	"end",
+type Command struct {
+	name        string
+	description string
+	argsDesc    []string
+	executeFunc func(*Game, []string) error
+}
+
+var AllCommands []Command
+
+func LoadCommands() {
+	AllCommands = []Command{
+		{
+			name:        "help",
+			description: "Lists all commands and their requireds arguments",
+			argsDesc:    []string{},
+			executeFunc: helpCommand,
+		},
+		{
+			name:        "go",
+			description: "You attempt to move in one of the four cardinal directions (N, S, E, W)",
+			argsDesc:    []string{"direction"},
+			executeFunc: goCommand,
+		},
+		{
+			name:        "end",
+			description: "Ends the game for this session",
+			argsDesc:    []string{},
+			executeFunc: endCommand,
+		},
+	}
 }
 
 func CommandSuggest(toComplete string) []string {
-	if len(toComplete) == 0 {
-		return allCommands
+	var commNames []string
+	for _, c := range AllCommands {
+		commNames = append(commNames, c.name)
 	}
 
-	arr := make([]string, 0)
-	for _, c := range allCommands {
-		if len(toComplete) <= len(c) && c[:len(toComplete)] == toComplete {
-			arr = append(arr, c)
+	if len(toComplete) == 0 {
+		return commNames
+	}
+
+	var suggestions []string
+	for _, n := range commNames {
+		frac := n[:len(toComplete)]
+		if toComplete == frac {
+			suggestions = append(suggestions, n)
 		}
 	}
-	return arr
+
+	return suggestions
 }
 
+// Validate command input and execute commands
 func (game *Game) ExecuteCommand(command string, args []string) {
-	switch command {
-	case "help":
-		fmt.Println(
-			"\n  [ Valid Commands ]\n" +
-				"  ---------------------------------------------------------------------------------------------------\n" +
-				"  help ..................... List all commands and their required arguments.\n" +
-				"  go <direction> ........... You attempt to move in one of the four cardinal directions (N, S, E, W).\n" +
-				"  end ...................... End the game instantly.\n",
-		)
-	case "go":
-		if args[0] == "up" {
-			fmt.Println("  You broke out of the game.\n  Congratulations; you win.\n  Now leave.")
-		} else {
-			fmt.Println("  Oh, shit. This isn't done yet...\n  Uhh...\n  All the doors in the room have magically sealed.\n  You are trapped.\n  Game Over.")
+	command = strings.ToLower(command)
+
+	commandFound := false
+	for _, comm := range AllCommands {
+		if comm.name == command {
+			commandFound = true
+			if len(args) >= len(comm.argsDesc) {
+
+				err := comm.executeFunc(game, args)
+				if err != nil {
+					// TODO: Something, idrk
+					fmt.Println(err.Error())
+				}
+
+			} else {
+				// TODO: Display game error text
+				fmt.Println("  I need more information. Check 'help' for more info.")
+			}
 		}
-		game.gameFinished = true
-	case "end":
-		game.gameFinished = true
-	default:
-		fmt.Println("  Eh? I don't understand. Try \"help\" for a list of commands.")
 	}
+
+	if !commandFound {
+		fmt.Println("  What? I don't understand that.")
+	}
+
+}
+
+func helpCommand(game *Game, args []string) error {
+
+	length := 0
+	entries := []string{}
+
+	// Make left side of table
+	for _, c := range AllCommands {
+		entry := c.name
+		for _, a := range c.argsDesc {
+			entry += " <" + a + ">"
+		}
+		entry += "..."
+
+		if len(entry) > length {
+			length = len(entry)
+		}
+		entries = append(entries, entry)
+	}
+
+	// Extend dots to max length
+	for i, e := range entries {
+		numDots := length - len(e)
+		for n := 0; n < numDots; n++ {
+			entries[i] += "."
+		}
+	}
+
+	// Add Descriptions
+	for i, _ := range entries {
+		command := AllCommands[i]
+		entries[i] += command.description
+		if len(entries[i]) > length {
+			length = len(entries[i])
+		}
+	}
+
+	fmt.Print("\n  [ Valid Commands ]\n --")
+	for n := 0; n < length; n++ {
+		fmt.Print("-")
+	}
+	fmt.Print("\n")
+	for _, e := range entries {
+		fmt.Println("  " + e)
+	}
+	fmt.Print("\n")
+
+	return nil
+}
+
+func goCommand(game *Game, args []string) error {
+	if args == nil || len(args) < 1 {
+		return MissingArgumentsError("  I need to know where you want to go (north, south, east, west)")
+	}
+	dir, err := parseDirection(args[0])
+	if err != nil {
+		return InvalidArgumentsError("  What? Where's '" + args[0] + "'?\n  Please just stick to the cardinal directions.")
+	}
+
+	// Check for Doors
+	game.GetRoom(game.Player.position)
+
+	// Move Player
+	game.Player.position = newCoords
+
+	return nil
+}
+
+func endCommand(game *Game, args []string) error {
+	game.gameFinished = true
+	return nil
 }
